@@ -1,50 +1,12 @@
-{
- "cells": [
-  {
-   "metadata": {},
-   "cell_type": "markdown",
-   "source": [
-    "# TorchRL Project Requirements\n",
-    "\n",
-    "This file contains all the dependencies required for the Tor"
-   ],
-   "id": "5574514842041682"
-  },
-  {
-   "metadata": {},
-   "cell_type": "code",
-   "outputs": [],
-   "execution_count": null,
-   "source": [
-    "# Dependencies required for the TorchRL project\n",
-    "torch>=2.0.0\n",
-    "torchrl>=0.2.0\n",
-    "gymnasium\n",
-    "tensorboard\n",
-    "matplotlib"
-   ],
-   "id": "5d3d73058bd746"
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 2
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython2",
-   "version": "2.7.6"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
-}
+#%% md
+# TorchRL Project Requirements
+
+This file contains all the dependencies required for the Tor
+#%%
+# Dependencies required for the TorchRL project
+torch>=2.0.0
+torchrl>=0.2.0
+gymnasium
+tensorboard
+matplotlib
+pytest

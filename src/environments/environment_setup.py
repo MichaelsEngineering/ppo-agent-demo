@@ -1,5 +1,6 @@
 import gymnasium as gym
 from gymnasium import spaces
+from gymnasium.utils import seeding
 import numpy as np
 from typing import Tuple, Dict, Any
 
@@ -29,21 +30,16 @@ class MatrixEnv(gym.Env):
         self.observation_space = spaces.MultiBinary(self.size)
 
     def reset(self, seed=None, options=None):
-        """
-        Reset the environment to an initial state.
-
-        Returns:
-            observation (np.ndarray): The initial 2x2 binary matrix.
-            info (dict): Additional information (empty for now).
-        """
-        # Set a seed for reproducibility if provided.
+        """Reset the environment to an initial state and returns the initial observation."""
+        # Set the random seed if provided
         if seed is not None:
-            self.seed(seed)
+            np.random.seed(seed)
 
-        # Generate an initial state by sampling from the observation space,
-        # which returns a 2x2 binary matrix.
-        initial_state = self.observation_space.sample()
-        return initial_state, {}
+        # Initialize a random binary matrix as the initial state
+        self.state = np.random.randint(0, 2, size=self.size)
+
+        # Return the initial state and an empty info dictionary
+        return self.state, {}
 
 
 # --- Quick Test ---
