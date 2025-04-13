@@ -16,6 +16,7 @@ class MatrixEnv(gym.Env):
     def __init__(self, size: Tuple[int, int] = (2, 2), device: str = None):
         super(MatrixEnv, self).__init__()
 
+
         # Validate the size
         if not isinstance(size, tuple) or len(size) != 2:
             raise ValueError("Size must be a tuple of two integers.")
@@ -27,10 +28,9 @@ class MatrixEnv(gym.Env):
         self.size = size
         self.device = device if device else ("cuda" if torch.cuda.is_available() else "cpu")
 
-        # Define the observation space in terms of discrete 0/1, but we now store as PyTorch internally.
-        # Since we allow cell updates up to 9, we might rely on gym.spaces.MultiDiscrete.
-        # However, for simplicity, we keep MultiBinary and just note that we can store up to 9 in PyTorch.
-        self.observation_space = spaces.MultiBinary(self.size)
+        discrete_dims = [10] * (size[0] * size[1])
+        self.observation_space = spaces.MultiDiscrete(discrete_dims)
+
         self.action_space = spaces.Tuple((
             spaces.Discrete(self.size[0]),  # i
             spaces.Discrete(self.size[1]),  # j
@@ -42,21 +42,26 @@ class MatrixEnv(gym.Env):
         self.target = None
         self._seed_value = None
 
+    def seed(self, seed=None):
+        """
+        Set the environment's random seed, and store it in self.seed_value.
+        """
+        if seed is not None:
+            self.seed_value = seed
+            torch.manual_seed(seed)
+            np.random.seed(seed)
+
     def reset(self, seed: int = None, options: dict = None) -> tuple:
         """
         Reset the environment to an initial state and return the observation.
 
         Returns:
             observation (dict):
-                - "current": A torch.Tensor of shape (rows, cols)
-                - "target": A torch.Tensor of shape (rows, cols)
+                - "current": A torch.Tensor of flattened shape (rows * cols)
+                - "target": A torch.Tensor of flattened shape (rows * cols)
             info (dict): Additional info (empty here).
         """
-        # Set the random seed if provided.
-        if seed is not None:
-            self._seed_value = seed
-            torch.manual_seed(seed)
-            np.random.seed(seed)
+        # We are ignoring the 'seed' to keep the signature consistent but not actually seeding anything.
 
         # For demonstration, we randomly generate the target grid with values 0 or 1.
         self.target = torch.randint(
@@ -74,7 +79,12 @@ class MatrixEnv(gym.Env):
             device=self.device
         )
 
-        observation = {"current": self.current.clone(), "target": self.target.clone()}
+        # Flatten for consistency with MultiDiscrete([10]*(rows*cols))
+        observation = {
+            "current": self.current.view(-1).clone(),
+            "target": self.target.view(-1).clone()
+        }
+
         return observation, {}
 
     def step(self, action: tuple) -> tuple:
@@ -119,9 +129,10 @@ class MatrixEnv(gym.Env):
 
         # Return the observation as a copy to avoid side-effects.
         observation = {
-            "current": self.current.clone(),
-            "target": self.target.clone()
+            "current": self.current.view(-1).clone(),
+            "target": self.target.view(-1).clone()
         }
+
         return observation, float(reward), terminated, truncated, info
 
     def load_sample(self, sample):
