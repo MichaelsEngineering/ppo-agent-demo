@@ -1,30 +1,11 @@
-import json
 import torch
 import mlflow
 import mlflow.pytorch
 import matplotlib.pyplot as plt
 import os
 import shutil
-
-def load_json_dataset(json_path="./src/data/simple.json", split="train"):
-    with open(json_path, 'r') as f:
-        data = json.load(f)
-
-    if split not in data:
-        raise ValueError(f"Split '{split}' not found in JSON data.")
-
-    samples = data[split]
-    result = []
-
-    for idx, sample in enumerate(samples):
-        if not isinstance(sample, dict) or 'input' not in sample or 'output' not in sample:
-            raise ValueError(f"Invalid sample format at index {idx}. Expected keys 'input' and 'output'.")
-
-        input_tensor = torch.tensor(sample['input'], dtype=torch.float32)
-        output_tensor = torch.tensor(sample['output'], dtype=torch.float32)
-        result.append((input_tensor, output_tensor))
-
-    return result
+from utilities.load_json_dataset import load_json_dataset
+from environments.environment_setup import MatrixEnv
 
 def save_tensor_image(tensor, title, filename):
     """
@@ -51,16 +32,52 @@ def format_dataset_for_humans(name, dataset):
     return "\n".join(lines)
 
 if __name__ == "__main__":
-    json_dataset_path = "./src/data/simple.json"
+    # Instantiate the environment
+    env = MatrixEnv(size=(2, 2))
+    json_dataset_path = "./src/data/simple.json" # Update
 
     # Load train and test datasets
     train_dataset = load_json_dataset(json_dataset_path, split="train")
     test_dataset = load_json_dataset(json_dataset_path, split="test")
 
-    print(train_dataset)
+    # Demonstrate accessing a sample (e.g., sample 0)
+    sample_input, sample_output = train_dataset[0]  # the first sample
+    print("Train Dataset Sample 0 Input:\n", sample_input)
+    print("Train Dataset Sample 0 Output:\n", sample_output)
 
+    # 3) Convert these to integer tensors on the environment device.
+    #    (In your environment, 'current' and 'target' are stored as torch.long).
+    sample_input = sample_input.to(env.device).long()
+    sample_output = sample_output.to(env.device).long()
+
+    # 4) Assign them directly to env.current and env.target,
+    #    bypassing the random reset.
+    env.current = sample_input
+    env.target = sample_output
+
+    # 5) Build an observation dict manually, just for viewing.
+    observation = {
+        "current": env.current.clone(),
+        "target": env.target.clone()
+    }
+    print("Environment loaded from sample 0:", observation)
+
+    # 6) (Optional) Demonstrate a step. For example, try to match
+    #    the top-left cell in 'current' to the top-left cell in 'target'.
+    i, j = 0, 0
+    desired_value = int(env.target[i, j].item())
+    action = (i, j, desired_value)
+    obs, reward, terminated, truncated, info = env.step(action)
+
+    print("\nAfter one step using action:", action)
+    print("Obs:", obs)
+    print("Reward:", reward)
+    print("Terminated:", terminated)
+    print("Truncated:", truncated)
+    print("Info:", info)
     # Start MLflow experiment
     mlflow.set_experiment("ppo-agent-demo")
+
     with mlflow.start_run(run_name="dataset-logging"):
         os.makedirs("tmp_images", exist_ok=True)
 
