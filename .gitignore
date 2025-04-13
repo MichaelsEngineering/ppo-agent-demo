@@ -173,3 +173,13 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 /ppo-agent-demo-env/
+
+# Ignore Tensorboard outputs
+*.tfevents.*
+
+
+# Ignore MLflow outputs
+mlruns/
+tmp_images/
+*.png
+*.txt
