@@ -124,6 +124,9 @@ class MatrixEnv(gym.Env):
         }
         return observation, float(reward), terminated, truncated, info
 
+    def load_sample(self, sample):
+        self.current, self.target = sample
+
     def render(self, mode="human"):
         """
         Render the environment's state in a human-readable way.

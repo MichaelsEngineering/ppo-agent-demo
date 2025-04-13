@@ -12,7 +12,7 @@ def save_tensor_image(tensor, title, filename):
     Saves a grayscale image from a 2D tensor to disk using matplotlib.
     """
     fig, ax = plt.subplots()
-    ax.imshow(tensor.numpy(), cmap='gray')
+    ax.imshow(tensor.cpu().numpy(), cmap='gray')
     ax.set_title(title)
     ax.axis('off')
     fig.tight_layout()
@@ -37,23 +37,20 @@ if __name__ == "__main__":
     json_dataset_path = "./src/data/simple.json" # Update
 
     # Load train and test datasets
-    train_dataset = load_json_dataset(json_dataset_path, split="train")
-    test_dataset = load_json_dataset(json_dataset_path, split="test")
+    train_dataset = load_json_dataset(json_dataset_path, split="train", device=env.device)
+    test_dataset = load_json_dataset(json_dataset_path, split="test", device=env.device)
 
     # Demonstrate accessing a sample (e.g., sample 0)
     sample_input, sample_output = train_dataset[0]  # the first sample
     print("Train Dataset Sample 0 Input:\n", sample_input)
     print("Train Dataset Sample 0 Output:\n", sample_output)
 
-    # 3) Convert these to integer tensors on the environment device.
-    #    (In your environment, 'current' and 'target' are stored as torch.long).
-    sample_input = sample_input.to(env.device).long()
-    sample_output = sample_output.to(env.device).long()
+    # If your environment strictly needs them in long format, you can cast them here
+    # — or, as a next step, do that inside `load_json_dataset(...)`.
+    # sample_input = sample_input.long()
+    # sample_output = sample_output.long()
 
-    # 4) Assign them directly to env.current and env.target,
-    #    bypassing the random reset.
-    env.current = sample_input
-    env.target = sample_output
+    env.load_sample((sample_input, sample_output))
 
     # 5) Build an observation dict manually, just for viewing.
     observation = {
