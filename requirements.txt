@@ -1,0 +1,9 @@
+# TorchRL Project Requirements
+# This file contains all the dependencies required for the TorchRL project
+
+torch>=2.0.0
+torchrl>=0.2.0
+gymnasium
+tensorboard
+matplotlib
+pytest
