@@ -73,7 +73,7 @@ if __name__ == "__main__":
     print("Truncated:", truncated)
     print("Info:", info)
     # Start MLflow experiment
-    mlflow.set_experiment("ppo-agent-demo")
+    mlflow.set_experiment("sac-agent-demo")
 
     with mlflow.start_run(run_name="dataset-logging"):
         os.makedirs("tmp_images", exist_ok=True)
