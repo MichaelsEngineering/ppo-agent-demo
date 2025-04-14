@@ -172,7 +172,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-/ppo-agent-demo-env/
+/sac-agent-demo-env/
 
 # Ignore Tensorboard outputs
 *.tfevents.*
