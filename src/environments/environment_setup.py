@@ -1,9 +1,11 @@
 import torch
 import numpy as np
 import gymnasium as gym
-from gymnasium import spaces
-from gymnasium.utils import seeding
+import gymnasium.spaces as spaces
+import gymnasium.utils.seeding as seeding
 from typing import Tuple, Dict, Any
+
+
 
 
 class MatrixEnv(gym.Env):

@@ -4,4 +4,7 @@
     <option name="sdkName" value="Python 3.12.7 WSL (Ubuntu): (/home/qol/public-portfolio/ppo-agent-demo/ppo-agent-demo-env/bin/python3)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13.3 WSL (Ubuntu): (/home/qol/public-portfolio/sac-agent-demo/sac-agent-env/bin/python3)" project-jdk-type="Python SDK" />
+  <component name="PythonCompatibilityInspectionAdvertiser">
+    <option name="version" value="3" />
+  </component>
 </project>
