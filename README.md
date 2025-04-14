@@ -1,4 +1,4 @@
-# TorchRL Project  
+# TorchRL Project (Work in progress) 
 This repository provides a complete implementation of Soft Actor-Critic (SAC) using PyTorch and TorchRL utilities. It’s an experiment focused on demonstrating how integrating transformer architectures with SAC can capture long-term dependencies, while also navigating the increased tuning complexity inherent in such an approach.
 
 ## Project Overview
@@ -12,29 +12,24 @@ This repository provides a complete implementation of Soft Actor-Critic (SAC) us
 ```plaintext
 ├── .idea/
 ├── src/
-│   ├── models/
-│   │   ├── decision_transformer.py  # TorchRL implementation
-│   │   └── model_utils.py
-│   ├── environments/
-│   │   ├── env_config.py
-│   │   └── env_wrappers.py
 │   ├── data/
-│   │   ├── collectors.py            # TorchRL data collection
-│   │   └── preprocessing.py         # TorchRL transforms
+│   │   ├── simple.json 
+│   └── deployment/   
+│   ├── environments/
+│   │   ├── environment_setup.py
+│   ├── models/
+│   │   ├── actor.py  
+│   │   └── critic.py
 │   ├── training/
-│   │   ├── trainer.py               # Using TorchRL utilities
-│   │   └── evaluation.py
-│   └── deployment/
-│       ├── torchscript_export.py
-│       ├── onnx_export.py
-│       └── inference_server.py
-├── notebooks/
-│   ├── 01_environment_exploration.ipynb
-│   ├── 02_model_training.ipynb
-│   └── 03_deployment_demo.ipynb
+│   │   ├── replay_buffer.py               
+│   │   ├── train_sac.py
+|   |   └── update_parameters.py
+│   ├── training/
+|   |   └── load_json.py
 ├── tests/
     └── test_model.py
 ├── .GITIGNORE
 ├── LICENSE.md
+├── main.py
 ├── README.md
 └── requirements.txt
