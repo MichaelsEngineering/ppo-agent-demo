@@ -1,35 +1,10 @@
 import torch
 import mlflow
 import mlflow.pytorch
-import matplotlib.pyplot as plt
 import os
 import shutil
-from utilities.load_json_dataset import load_json_dataset
+from utilities.load_json_dataset import load_json_dataset, save_tensor_image, format_dataset_for_humans
 from environments.environment_setup import MatrixEnv
-
-def save_tensor_image(tensor, title, filename):
-    """
-    Saves a grayscale image from a 2D tensor to disk using matplotlib.
-    """
-    fig, ax = plt.subplots()
-    ax.imshow(tensor.cpu().numpy(), cmap='gray')
-    ax.set_title(title)
-    ax.axis('off')
-    fig.tight_layout()
-    fig.savefig(filename)
-    plt.close(fig)
-
-def format_dataset_for_humans(name, dataset):
-    """
-    Create a readable multiline string for visual inspection in MLflow.
-    """
-    lines = [f"{name} Dataset:"]
-    for idx, (inp, out) in enumerate(dataset):
-        lines.append(f"Sample {idx}:")
-        lines.append(f"Input:\n{inp}")
-        lines.append(f"Output:\n{out}")
-        lines.append("")  # blank line between samples
-    return "\n".join(lines)
 
 if __name__ == "__main__":
     # Instantiate the environment

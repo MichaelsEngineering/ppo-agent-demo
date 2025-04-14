@@ -1,5 +1,6 @@
 import json
 import torch
+import matplotlib.pyplot as plt
 
 def load_json_dataset(json_path="./src/data/simple.json", split="train", device=None):
     with open(json_path, 'r') as f:
@@ -27,3 +28,27 @@ def load_json_dataset(json_path="./src/data/simple.json", split="train", device=
         result.append((input_tensor, output_tensor))
 
     return result
+
+def save_tensor_image(tensor, title, filename):
+    """
+    Saves a grayscale image from a 2D tensor to disk using matplotlib.
+    """
+    fig, ax = plt.subplots()
+    ax.imshow(tensor.cpu().numpy(), cmap='gray')
+    ax.set_title(title)
+    ax.axis('off')
+    fig.tight_layout()
+    fig.savefig(filename)
+    plt.close(fig)
+
+def format_dataset_for_humans(name, dataset):
+    """
+    Create a readable multiline string for visual inspection in MLflow.
+    """
+    lines = [f"{name} Dataset:"]
+    for idx, (inp, out) in enumerate(dataset):
+        lines.append(f"Sample {idx}:")
+        lines.append(f"Input:\n{inp}")
+        lines.append(f"Output:\n{out}")
+        lines.append("")  # blank line between samples
+    return "\n".join(lines)
