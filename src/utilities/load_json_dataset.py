@@ -173,7 +173,7 @@ if __name__ == "__main__":
         # seed=42,  # Not needed, it's optional
         return_pytorch_dataset=False  # changed from as_dataset to return_pytorch_dataset
     )
-    print(f"Loaded list of pairs: {ds_list}")
+    print(f"Loaded list of pairs: \n{ds_list}")
 
     for idx, (input_tensor, target_tensor) in enumerate(ds_list):
         input_list = input_tensor.tolist()

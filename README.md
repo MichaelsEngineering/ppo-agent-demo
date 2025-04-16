@@ -2,6 +2,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
+- [Special Sauce](#special-sauce)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -15,6 +16,32 @@ This repository provides a complete implementation of Soft Actor-Critic (SAC) us
 - **Rapid Experimentation**: Designed as a quick project, expect a project that is agile and experimental. It’s built for quick iterations, testing out ideas, and pushing limits.
 - **Full-Cycle Demonstration**: Experience a complete pipeline including model development, evaluation, and deployment, with real emphasis on TorchRL best practices.
 
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   gh repo clone MichaelsEngineering/sac-agent-demo
+   cd sac-agent-demo
+   ```
+   
+2. Create an env and install the required dependencies:
+
+   ```bash
+   python -m venv sac-env
+   source env/bin/activate  # Linux/macOS
+   # Windows: sac-env\Scripts\activate  
+   pip install -e .
+   # For development, include additional dev dependencies
+   pip install -e ".[dev]"
+   ```
+ 
+## Usage  
+
+1. Run the project
+   ```bash
+   python src/main.py
+   ```
 ## Project Structure
 
 ```plaintext
@@ -31,36 +58,19 @@ This repository provides a complete implementation of Soft Actor-Critic (SAC) us
 │   ├── training/
 │   │   ├── replay_buffer.py               
 │   │   ├── train_sac.py
-|   |   └── update_parameters.py
 │   ├── training/
 |   |   └── load_json.py
+│   └── main.py
 ├── tests/
-    └── test_model.py
+│   └── test_model.py
 ├── .GITIGNORE
 ├── LICENSE.md
-├── main.py
-├── README.md
-└── requirements.txt
+├── pip_requirements.txt
+├── pyproject.toml
+└── README.md
 ```
 
-## Installation
-
-1. Clone the repository:
-
-   ```bash
-   gh repo clone MichaelsEngineering/sac-agent-demo
-   cd sac-agent-demo
-   ```
-
-2. Create an env and install the required dependencies:
-
-   ```bash
-   pip install -r pip_requirements.txt
-   ```
-
-## Usage
-
-### Augment with Synonyms
+### Special Sauce
 
 To augment text using synonyms:
 

@@ -2,10 +2,7 @@ import torch
 import numpy as np
 import gymnasium as gym
 import gymnasium.spaces as spaces
-import gymnasium.utils.seeding as seeding
-from typing import Tuple, Dict, Any
-
-
+from typing import Tuple
 
 
 class MatrixEnv(gym.Env):
