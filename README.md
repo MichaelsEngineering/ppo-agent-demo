@@ -2,19 +2,27 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
-- [Special Sauce](#special-sauce)
+- [Roadmap](#roadmap-for-contributions)
 - [Contributing](#contributing)
 - [License](#license)
 
+# SAC Torch MLFLow Vibe Project
 
-# TorchRL Project (Work in progress) 
-This repository provides a complete implementation of Soft Actor-Critic (SAC) using PyTorch and TorchRL utilities. It’s an experiment focused on demonstrating how integrating transformer architectures with SAC can capture long-term dependencies, while also navigating the increased tuning complexity inherent in such an approach.
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## Project Overview
+A vibe coded implementation of Soft Actor-Critic (SAC) using PyTorch and MLFlow. This project demonstrates how transformer architectures can be integrated with SAC to effectively capture long-term dependencies in reinforcement learning tasks.
 
-- **TorchRL-Powered**: Every component of this project leverages TorchRL. From data collection to preprocessing and model training, it’s all optimized for TorchRL workflows.
-- **Rapid Experimentation**: Designed as a quick project, expect a project that is agile and experimental. It’s built for quick iterations, testing out ideas, and pushing limits.
-- **Full-Cycle Demonstration**: Experience a complete pipeline including model development, evaluation, and deployment, with real emphasis on TorchRL best practices.
+## Key Features
+
+- **Torch-Powered**: Every component leverages Torch's optimized workflows for data collection, preprocessing, and model training
+- **Transformer-Enhanced RL**: Novel integration of transformer architecture with SAC for superior temporal reasoning
+- **MLflow Integration**: Complete experiment tracking with parameter logging and model versioning
+- **Modular Design**: Clean separation of environment, model, and training components for easy extension
+
+## Technical Insights
+- **Rapid Development**: This implementation was developed in approximately 12 hours as a proof-of-concept, demonstrating rapid prototyping capability while maintaining a clean architecture. It showcases the ability to quickly deliver working machine learning systems.
+- **Production Readiness**: While built as a rapid prototype, the codebase follows a modular design with clear separation between environment, models, and training components. If continued, future iterations will focus on implementing proper logging with configurable verbosity levels and comprehensive exception handling.
+
 
 ## Installation
 
@@ -29,19 +37,31 @@ This repository provides a complete implementation of Soft Actor-Critic (SAC) us
 
    ```bash
    python -m venv sac-env
-   source env/bin/activate  # Linux/macOS
+   source sac-env/bin/activate  # Linux/macOS
    # Windows: sac-env\Scripts\activate  
    pip install -e .
-   # For development, include additional dev dependencies
+   # Or, for development, include additional dev dependencies
    pip install -e ".[dev]"
    ```
- 
-## Usage  
+3. Track Experiments:
+
+ ```bash
+ mlflow ui # Then open in browser
+ ```
+
+4. Run main:
+
+```bash
+   python src/main.py
+```
+
+## Usage
 
 1. Run the project
    ```bash
    python src/main.py
    ```
+   
 ## Project Structure
 
 ```plaintext
@@ -70,15 +90,12 @@ This repository provides a complete implementation of Soft Actor-Critic (SAC) us
 └── README.md
 ```
 
-### Special Sauce
 
-To augment text using synonyms:
-
-1. Working on this
-
-### Running Tests
-
-To run the unit tests:
+## Roadmap for Contributions
+- Upgrade Data Loading for CI/CD engineering best practices
+- Add support for continuous action spaces
+- Enhance MLflow dashboards 
+- Containerize with Docker for reproducible deployment
 
 
 ## Contributing
@@ -91,6 +108,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
